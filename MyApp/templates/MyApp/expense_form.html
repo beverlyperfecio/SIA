@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>{{ page_title }} - Daily Expense Tracker</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #101827;
+            color: #f8fafc;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: linear-gradient(
+                135deg,
+                #19133c,
+                #30206b,
+                #174c5c
+            );
+
+            padding: 28px 20px;
+
+            border-bottom: 1px solid #44358c;
+        }
+
+        .header-content {
+            max-width: 850px;
+            margin: auto;
+        }
+
+        .header h1 {
+            margin: 0;
+
+            text-align: center;
+
+            font-size: 32px;
+
+            letter-spacing: 0.5px;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            max-width: 850px;
+
+            margin: 40px auto;
+
+            padding: 0 20px;
+        }
+
+        /* CARD */
+
+        .card {
+            background: #172033;
+
+            padding: 32px;
+
+            border-radius: 18px;
+
+            border: 1px solid #293750;
+
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.30);
+        }
+
+        .card h2 {
+            margin-top: 0;
+
+            margin-bottom: 28px;
+
+            color: #ffffff;
+
+            font-size: 25px;
+        }
+
+        /* FORM */
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+
+            margin-bottom: 8px;
+
+            color: #c4b5fd;
+
+            font-weight: bold;
+
+            font-size: 14px;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border: 1px solid #3b4964;
+
+            border-radius: 9px;
+
+            background: #111a2b;
+
+            color: #f8fafc;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #64748b;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #20c997;
+
+            box-shadow:
+                0 0 0 3px rgba(32, 201, 151, 0.12);
+        }
+
+        textarea {
+            min-height: 120px;
+
+            resize: vertical;
+        }
+
+        /* DATE INPUT */
+
+        input[type="date"] {
+            color-scheme: dark;
+        }
+
+        /* ERROR */
+
+        .help {
+            color: #fb7185;
+
+            font-size: 13px;
+
+            margin-top: 6px;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            margin-top: 30px;
+
+            display: flex;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+        button,
+        .back {
+            padding: 12px 20px;
+
+            border-radius: 9px;
+
+            border: none;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            transition: 0.2s;
+        }
+
+        /* ADD / UPDATE */
+
+        button {
+            background: #20c997;
+
+            color: #071c18;
+        }
+
+        button:hover {
+            background: #63e6be;
+
+            transform: translateY(-2px);
+        }
+
+        /* CANCEL */
+
+        .back {
+            background: #293750;
+
+            color: #cbd5e1;
+        }
+
+        .back:hover {
+            background: #3b4964;
+
+            color: white;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .container {
+                margin-top: 25px;
+            }
+
+            .card {
+                padding: 22px;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button,
+            .back {
+                width: 100%;
+
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div class="header-content">
+
+            <h1>
+                Daily Expense Tracker
+            </h1>
+
+        </div>
+
+    </div>
+
+
+    <!-- FORM -->
+
+    <div class="container">
+
+        <div class="card">
+
+            <h2>
+                {{ page_title }}
+            </h2>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                {% for field in form %}
+
+                    <div class="field">
+
+                        {{ field.label_tag }}
+
+                        {{ field }}
+
+
+                        {% for error in field.errors %}
+
+                            <div class="help">
+                                {{ error }}
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% endfor %}
+
+
+                <div class="buttons">
+
+                    <button type="submit">
+                        {{ button_text }}
+                    </button>
+
+
+                    <a
+                        href="{% url 'expense_list' %}"
+                        class="back"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
